@@ -1,4 +1,4 @@
-for i in range(5):
-    for j in range(5):
-        print("%4d"%(5*i+5*+j), end="")
+for row in range(5):
+    for col in range(4):
+        print("%4d"%(row+col), end="")
     print()
