@@ -9,8 +9,16 @@ while True:
     else:
         break
 
+line_number = 1
 with open("files\\EncorePython05_file3.txt", 'r') as file:
-     for l in file:
-         print(l.strip())
-     
+    for line in file:
+        line = line.strip().split()
+        line_number += 1
+        print(f"Mutliples of {line_number-1}:", end=" ")
+        
+        for number in line:
+            if str(user_input) in number:
+                print(number, end=" ")
+        print()
+        
 # File is closed
