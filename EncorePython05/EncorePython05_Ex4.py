@@ -17,7 +17,7 @@ with open("files\\EncorePython05_file3.txt", 'r') as file:
         print(f"Mutliples of {line_number-1}:", end=" ")
         
         for number in line:
-            if str(user_input) in number:
+            if str(user_input) == number[-1]:
                 print(number, end=" ")
         print()
         
