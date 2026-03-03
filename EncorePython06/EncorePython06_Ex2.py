@@ -30,6 +30,7 @@ def Mean(number_list):
 def Mode(number_list):
     number_count = [0] * 6
     value = 0
+    high_count = 1
     for number in number_list:
         for index in number_count:
             if number == value:
@@ -38,6 +39,9 @@ def Mode(number_list):
         value = 0
 
     for count in number_count:
+        if count > high_count:
+            high_count = count
+        
         
     print(number_count)
     #return mode
