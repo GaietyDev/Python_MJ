@@ -1,7 +1,7 @@
 import os
 
 #path = os.path.join(os.getcwd, "files")
-number_list = [1, 2, 2, 3, 3, 3, 4]
+number_list = [1, 2, 2, 3, 3, 3, 4, 4, 5,]
 
 def Median(number_list):
     length = len(number_list)
@@ -27,29 +27,27 @@ def Mean(number_list):
     mean = total / num_of_values
     return mean
 
-def Mode(number_list):
-    number_count = [0] * 6
-    value = 0
-    high_count = 1
-    for number in number_list:
-        for index in number_count:
-            if number == value:
-                number_count[value] += 1
-            value += 1
-        value = 0
+def Mode(number_list, number_range : int):
+    number_dictionary = {}
+    high_count = 0
+    mode = 0
+    
+    for index in range(number_range):
+        number_dictionary.update({index+1 : 0})
 
-    for count in number_count:
+    for number in number_list:
+        for index in number_dictionary.keys():
+            if number == index:
+                value = number_dictionary.get(index)
+                value +=1
+                number_dictionary[index] = value
+    print(number_dictionary)
+    for count in number_dictionary.values():
         if count > high_count:
             high_count = count
-        
-        
-    print(number_count)
+
     #return mode
-
-
-
 #file_name = input("Enter the name of the data file: ")
 
-mode = Mode(number_list)
-#print(mode)
+print(Mode(number_list, 5))
 
