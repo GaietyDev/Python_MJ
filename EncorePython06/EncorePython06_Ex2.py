@@ -1,7 +1,11 @@
 import os
 
-#path = os.path.join(os.getcwd, "files")
-number_list = [1, 2, 2, 3, 3, 3, 4, 4, 5,]
+f= open("files\\dist1.txt", 'r')
+number_list = []
+
+for line in f:
+    number_list.append(int(line))
+f.close()
 
 def Median(number_list):
     length = len(number_list)
@@ -30,7 +34,6 @@ def Mean(number_list):
 def Mode(number_list, number_range : int):
     number_dictionary = {}
     high_count = 0
-    mode = 0
     
     for index in range(number_range):
         number_dictionary.update({index+1 : 0})
@@ -41,13 +44,16 @@ def Mode(number_list, number_range : int):
                 value = number_dictionary.get(index)
                 value +=1
                 number_dictionary[index] = value
-    print(number_dictionary)
-    for count in number_dictionary.values():
+    
+    for key, count in number_dictionary.items():
         if count > high_count:
             high_count = count
+            high_key = key
+    return high_key
 
-    #return mode
 #file_name = input("Enter the name of the data file: ")
 
-print(Mode(number_list, 5))
+print(Median(number_list))
+print(Mean(number_list))
+print(Mode(number_list, 42))
 
