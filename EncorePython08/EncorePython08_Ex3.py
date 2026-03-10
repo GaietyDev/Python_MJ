@@ -1,26 +1,17 @@
-fib_num1 = 0
-fib_num2 = 1
-fib_num3 = 0
-user_input = 1
+import os
 
-while user_input != 0:
-    user_input = int(input("Enter a positive integer (0 to quit): "))
-    if user_input >= 1:
-        for fib in range(user_input):
-            fib_num3 = fib_num1 + fib_num2
-            fib_num1 = fib_num2
-            fib_num2 = fib_num3        
-        if user_input % 10 == 0:
-            print(f"{user_input}th fibbonacci value = {fib_num3}")
-        elif user_input % 10 == 1:
-            print(f"{user_input}st fibbonacci value = {fib_num3}")
-        elif user_input % 10 == 2:
-            print(f"{user_input}nd fibbonacci value = {fib_num3}")
-        elif user_input % 10 == 3:
-            print(f"{user_input}rd fibbonacci value = {fib_num3}")
-        else:
-            print(f"{user_input}th fibbonacci value = {fib_num3}")
-        fib_num1 = 1
-        fib_num2 = 0
-    else:
-        print("You have quit the program")
+commands = ("1","2","3","4","5","6","7",)
+
+def main():
+    current_dir = os.getcwd()
+    print(current_dir)
+    print("1 List the current directory")
+    print("2 Move up")
+    print("3 Move down")
+    print("4 Number of files in the directory")
+    print("5 Size of the directory in bytes")
+    print("6 Search for a filename")
+    print("7 Quit the program")
+    user_input = input("Enter the number of the command: ")
+
+main()
