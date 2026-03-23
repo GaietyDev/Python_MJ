@@ -21,6 +21,16 @@ def createDot(x, y, radius):
     t.dot(radius, "yellow")
     t.goto(0,0)
 
+def calculateRay(y, x , distance):
+    dot_angle_radians = math.atan2(y,x)
+    dot_angle_degrees = math.degrees(dot_angle_radians)
+    t.pendown()
+    t.left(dot_angle_degrees)
+    t.forward(distance)
+    t.penup()
+    t.right(dot_angle_degrees)
+    t.goto(0,0)
+
 def shootRay(angle, distance):
     angle = float(angle)
 
@@ -51,6 +61,18 @@ while True:
     origin_distance_view =  origin_distance_world * 200
 
     createDot(dot_x_view, dot_y_view, dot_radius_view)
+
+    dot_angle_radians = math.atan2(dot_y_view, dot_x_view)
+    dot_angle_degrees = math.degrees(dot_angle_radians + dot_radius_view * 1.25)
+    beta = dot_angle_degrees
+    t.pendown()
+    t.left(dot_angle_degrees)
+    t.forward(origin_distance_view)
+    t.penup()
+    t.right(dot_angle_degrees)
+    t.goto(0,0)
+
+    print(dot_angle_degrees)
 
     user_input = input("Enter the trajectory angle(degrees) or 'x' to quit: ")
     if user_input == 'x':
