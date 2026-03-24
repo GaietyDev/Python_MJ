@@ -43,7 +43,8 @@ def shootRay(angle, distance):
     
 createCrosshair()
 
-dot_radius_world = float(input("Enter the radius of the targets: "))
+#dot_radius_world = float(input("Enter the radius of the targets: "))
+dot_radius_world = 0.2
 dot_radius_view = dot_radius_world * 200
 
 while True:
@@ -63,7 +64,8 @@ while True:
     createDot(dot_x_view, dot_y_view, dot_radius_view)
 
     dot_angle_radians = math.atan2(dot_y_view, dot_x_view)
-    dot_angle_degrees = math.degrees(dot_angle_radians + dot_radius_view * 1.25)
+    print(dot_angle_radians)
+    dot_angle_degrees = math.degrees(dot_angle_radians)
     beta = dot_angle_degrees
     t.pendown()
     t.left(dot_angle_degrees)
@@ -71,7 +73,18 @@ while True:
     t.penup()
     t.right(dot_angle_degrees)
     t.goto(0,0)
+    print(dot_angle_degrees)
 
+    dot_angle_radians = math.atan2(dot_y_view+dot_radius_view, dot_x_view)
+    print(dot_angle_radians)
+    dot_angle_degrees = math.degrees(dot_angle_radians)
+    beta = dot_angle_degrees
+    t.pendown()
+    t.left(dot_angle_degrees)
+    t.forward(origin_distance_view)
+    t.penup()
+    t.right(dot_angle_degrees)
+    t.goto(0,0)
     print(dot_angle_degrees)
 
     user_input = input("Enter the trajectory angle(degrees) or 'x' to quit: ")
