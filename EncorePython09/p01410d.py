@@ -48,11 +48,12 @@ dot_radius_world = 0.2
 dot_radius_view = dot_radius_world * 200
 
 while True:
-    dot_x_world = random.uniform(-2.0, 2.0)
-    dot_y_world = random.uniform(-2.0, 2.0)
+    #dot_x_world = random.uniform(-2.0, 2.0)
+    #dot_y_world = random.uniform(-2.0, 2.0)
+    dot_x_world = 1
+    dot_y_world = 1
 
-    origin_distance_squared = pow(dot_x_world, 2) + pow(dot_y_world, 2)
-    origin_distance_world = math.sqrt(origin_distance_squared)
+    origin_distance_world = math.hypot(dot_x_world, dot_y_world)
         
     if origin_distance_world < (dot_radius_world * 1.25):
         continue
@@ -75,7 +76,19 @@ while True:
     t.goto(0,0)
     print(dot_angle_degrees)
 
-    dot_angle_radians = math.atan2(dot_y_view+dot_radius_view, dot_x_view)
+    dot_angle_radians = math.atan2(dot_y_view, dot_x_view)+(dot_radius_view*1.25)
+    print(dot_angle_radians)
+    dot_angle_degrees = math.degrees(dot_angle_radians)
+    beta = dot_angle_degrees
+    t.pendown()
+    t.left(dot_angle_degrees)
+    t.forward(origin_distance_view)
+    t.penup()
+    t.right(dot_angle_degrees)
+    t.goto(0,0)
+    print(dot_angle_degrees)
+
+    dot_angle_radians = math.atan2(dot_y_view, dot_x_view)-(dot_radius_view*1.25)
     print(dot_angle_radians)
     dot_angle_degrees = math.degrees(dot_angle_radians)
     beta = dot_angle_degrees
