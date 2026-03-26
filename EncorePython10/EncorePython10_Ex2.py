@@ -1,5 +1,7 @@
 from images import Image
 
+image_smokey = Image("smokey.gif")
+
 def noOperation():
     pass
 
@@ -21,9 +23,10 @@ def acceptCommand():
         print("|! INVALD INPUT >>> PLEASE ENTER A VALID KEY !|\n")
         acceptCommand()
 
-def runCommand(command):
-    pass
+def runCommand(command, image):
+    (operation,_) = COMMANDS[command]
+    print((operation,_))
 
 printMenu()
 command = acceptCommand()
-runCommand(command)
+runCommand(command, image_smokey)
