@@ -5,8 +5,12 @@ image_list = ['smokey', 'moon', 'EagleNebula']
 def noOperation():
     pass
 
+def pointOperation(Q, image):
+    pass
+
 COMMANDS = {0:('QUIT', noOperation()),
-            1:('Original', noOperation())}
+            1:('Original', noOperation()),
+            2:('Grayscale', passThru())}
 
 def printMenu():
     print("Key  Operation")
@@ -29,6 +33,14 @@ def runCommand(command, image):
     if operation == 'Original':
         print('Close the image to continue')
         image.draw()
+    elif operation == 'Grayscale':
+        Q = 0
+        print("\nProcessing image")
+        pointOperation(Q, image_name)
+        print("Showing processed image")
+        print('Close the image to continue')
+        image.draw()
+        
 
 def main():
     while True:
