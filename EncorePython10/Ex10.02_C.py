@@ -5,6 +5,16 @@ image_list = ['smokey', 'moon', 'EagleNebula']
 def noOperation():
     pass
 
+def pointOperation(command, Q, image):
+    transform(image, color2gray, Q)
+    (_,f) = COMMANDS[command]
+    transform(image, f, Q)
+
+def transform(image, function, Q):
+    for y in range(image.getHeight()):
+        for x in range(image.getWidth()):
+            image.setPixel(x,y, function(image.getPixel(x,y), Q))
+
 def passThru(triple, Q):
     return triple
 
@@ -16,19 +26,22 @@ def color2gray(triple, Q):
     lum = r + g + b
     return (lum, lum, lum)
 
-def transform(image, function, Q):
-    for y in range(image.getHeight()):
-        for x in range(image.getWidth()):
-            image.setPixel(x,y, function(image.getPixel(x,y), Q))
-
-def pointOperation(command, Q, image):
-    transform(image, color2gray, Q)
-    (_,f) = COMMANDS[command]
-    transform(image, f, Q)
+def threshold(triple, Q):
+    (r, g, b) = triple
+    if r < Q:
+        r = 0
+        g = 0
+        b = 0
+    else:
+        r = 255
+        g = 255
+        b = 255
+    return (r, g, b)
 
 COMMANDS = {0:('QUIT', noOperation),
             1:('Original', noOperation),
-            2:('Grayscale', passThru)}
+            2:('Grayscale', passThru),
+            3:('Thresholding', threshold)}
 
 def printMenu():
     print("Key  Operation")
@@ -58,7 +71,13 @@ def runCommand(command, image):
         print("Showing processed image")
         print('Close the image to continue')
         image.draw()
-        
+    elif operation == 'Thresholding':
+        Q = int(input("Enter threshold: "))
+        print("\nProcessing image")
+        pointOperation(command, Q, image)
+        print("Showing processed image")
+        print('Close the image to continue')
+        image.draw()    
 
 def main():
     while True:
