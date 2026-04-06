@@ -1,6 +1,6 @@
 from images import Image
 
-image_list = ['smokey', 'moon', 'EagleNebula']
+image_list = ['smokey', 'moon', 'EagleNebula', 'steganograph']
 
 def noOperation():
     pass
@@ -61,14 +61,14 @@ def contrast(triple, Q):
     return(r, g, b)
 
 def falseColor(triple, Q):
-    LUT = [(255,0,0),
-           (255,201,14),
-           (255,255,0),
-           (0,255,0),
-           (0,255,255),
-           (0,0,255),
-           (68,0,255),
-           (255,0,255)
+    LUT = [(255,0,0),       # Red
+           (255,201,14),    # Orange
+           (255,255,0),     # Yellow
+           (0,255,0),       # Green
+           (0,255,255),     # Cyan
+           (0,0,255),       # Blue
+           (68,0,255),      # Violent
+           (255,0,255)      # Magenta
            ]
     (r, g, b) = triple
     foundIt = False
