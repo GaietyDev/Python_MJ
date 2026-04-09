@@ -16,15 +16,15 @@ spoon_y = screen_height - 100
 
 class Raspberry:
     def __init__(self):         # initialization of a Raspberry
-         self.x: random horizontal pos.
-         self.y: start at top
-         self.dy: random step size, between 1 and 5
+         self.x = random.randint(10, screen_width)
+         self.y = 0
+         self.dy = random.randint(1,5)
 
     def update(self):           # update position each cycle of game loop
-        $# move down a bit
-        $# is rasp past the spoon?
-            $# yes, go back to top
-            $# random horizontal pos.
+        self.y += self. dy
+        if self.y > spoon_y:
+            self.y = 0
+            self.x = random.randint(10, screen_width)
         $# random lateral offset (+/- 5 jiggle)
         $# close to left side?
             $# hard limit at 10 on left side
