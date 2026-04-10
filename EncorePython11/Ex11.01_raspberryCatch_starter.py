@@ -5,8 +5,8 @@ import random
 
 # parameter definitions
 score = 0
-screen_width = 600
-screen_height = 400
+screen_width = int(input("Enter how wide the screen should be: "))
+screen_height = int(input("Enter how tall the screen should be: "))
 spoon_x = 300
 spoon_y = screen_height - 100
 input_fps = int(input("Enter the FPS: "))
