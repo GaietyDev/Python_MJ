@@ -9,6 +9,29 @@ screen_width = 600
 screen_height = 400
 spoon_x = 300
 spoon_y = screen_height - 100
+input_fps = int(input("Enter the FPS: "))
+colors = {'white':(255,255,255),
+          'red':(255,0,0),
+          'orange':(255,201,14),
+          'yellow':(255,255,0),
+          'green':(0,255,0),
+          'cyan':(0,255,255),
+          'blue':(0,0,255),
+          'violet':(68,0,255),
+          'magenta':(255,0,255)}
+
+# input validation for background color
+while True:
+    input_color = input("Enter the background color: ")
+    input_color = input_color.lower()
+    if input_color in colors.keys():
+        break
+    else:
+        print("|! INVALID COLOR !|")
+        print("list of valid colors:")
+        for key in colors.keys():
+           print(key)
+        print()
 
 #-------------------------------------------------
 
@@ -25,18 +48,18 @@ class Raspberry:
         if self.y > spoon_y:
             self.y = 0
             self.x = random.randint(10, screen_width)
-        $# random lateral offset (+/- 5 jiggle)
-        $# close to left side?
-            $# hard limit at 10 on left side
-        $# close to right side?
-            $# hard limit on right, too.
+        self.x += random.randint(-5, 5) # random lateral offset (+/- 5 jiggle)
+        if self.x < 10: # close to left side?
+            self.x = 10 # hard limit at 10 on left side
+        if self.x > screen_width - 20:  # close to right side?
+            self.x > screen_width - 20 # hard limit on right, too.
         screen.blit(raspberry_image, (self.x, self.y)) # update pygame with new location
                                                     
 
-    def is_caught(self):        # is the raspberry in the spoon?
-        $# a: True if raspberry is at or below spoon.
-        $# b: True if raspberry is at or right of spoon.
-        $# c: True if raspberry is at or left of sp. bowl
+    def is_caught(self):           # is the raspberry in the spoon?
+        a = self.y >= spoon_y      # a: True if raspberry is at or below spoon.
+        b = self.x >= spoon_x      # b: True if raspberry is at or right of spoon.
+        c = self.x <= spoon_x + 50 # c: True if raspberry is at or left of sp. bowl
         return a and b and c
 
 #-------------------------------------------------
@@ -44,7 +67,12 @@ class Raspberry:
 # Main program        
         
 clock = pygame.time.Clock()
-rasps = [Raspberry(),Raspberry(),Raspberry()] # instantiate 3 Raspberries
+rasps = [Raspberry()] # instantiate 1 raspberry
+
+rasps_amount = int(input("Enter the amount of raspberrys in play: "))
+for r in range(rasps_amount):
+    raspberry = Raspberry()
+    rasps.append(raspberry)
 
 pygame.init()   # initialize pygame module
 
@@ -66,9 +94,9 @@ def update_spoon():
 
 def check_for_catch():
     global score
-    $# loop over each raspberry
-        $# is the raspberry caught?
-        $# increment score
+    for r in rasps:         # loop over each raspberry
+        if r.is_caught():   # is the raspberry caught?
+            score += 1      # increment score
 
 def display(message):
     font = pygame.font.Font(None,36)
@@ -86,18 +114,17 @@ while True:
         if event.type == QUIT:
             exit()
 
-    screen.fill((255,255,255))  # setting background color (white)
+    screen.fill(colors[input_color])  # setting background color (white)
 
     # update each raspberry
-    $# loop over raspberries
-        $# run Raspberry update function
+    for r in rasps:  # loop over raspberries
+        r.update()   # run Raspberry update function
 
-    $# move spoon: run spoon update function
-    $# did catch one?
-    $# show new score
+    update_spoon()    # move spoon: run spoon update function
+    check_for_catch() # did catch one?
+    display("Score: " + str(score)) # show new score
     pygame.display.update()         # redraw display with updated game objects
-    clock.tick(30)                  # for every second 30 frames shown
-
+    clock.tick(input_fps)           # for every second 30 frames shown
 
 
 
