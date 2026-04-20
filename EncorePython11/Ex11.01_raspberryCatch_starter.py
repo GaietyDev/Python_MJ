@@ -9,7 +9,7 @@ screen_width = int(input("Enter how wide the screen should be: "))
 screen_height = int(input("Enter how tall the screen should be: "))
 spoon_x = 300
 spoon_y = screen_height - 100
-input_fps = int(input("Enter the FPS: "))
+input_multiplier = int(input("Enter how many times faster the program should run: "))
 colors = {'white':(255,255,255),
           'red':(255,0,0),
           'orange':(255,201,14),
@@ -124,7 +124,7 @@ while True:
     check_for_catch() # did catch one?
     display("Score: " + str(score)) # show new score
     pygame.display.update()         # redraw display with updated game objects
-    clock.tick(input_fps)           # for every second 30 frames shown
+    clock.tick(30*input_multiplier)           # for every second 30 frames shown
 
 
 
