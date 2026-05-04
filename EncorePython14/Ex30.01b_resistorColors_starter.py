@@ -33,7 +33,7 @@ NUMQ = 10  # number of questions needed to get right in a row
 def newQuestion():
     global R
     # Clear anything out of the Entry box
-    # ADD YOUR CODE HERE: 9
+    rvalue_entry.delete(0, 'end')
     
     d1 = 0
     while d1 == 0: # first digit is not zero
@@ -51,18 +51,24 @@ def newQuestion():
 # Parameters c1, c2, c3 are three color names (strings)
 # Draw a frame with each specified color
 def drawPattern(c1, c2, c3):
-    # REMOVE pass AFTER YOU ADD YOUR OWN CODE: 1
-    pass
 
     # draw first band in color c1, column=1, row=1
-    # ADD YOUR CODE HERE: 2
+    s=ttk.Style()
+    s.configure('A.TFrame', background=c1, borderwidth=5, relief='raised')
+    frame2 = ttk.Frame(mainframe, width=100, height=100, style='A.TFrame')
+    frame2.grid(column=1, row=1)
 
     # draw second band in color c2, column=2, row=1
-    # ADD YOUR CODE HERE: 3
-
+    t=ttk.Style()
+    t.configure('B.TFrame', background=c2, borderwidth=5, relief='raised')
+    frame3 = ttk.Frame(mainframe, width=100, height=100, style='B.TFrame')
+    frame3.grid(column=2, row=1)
+    
     # draw third band in color c3, column=3, row=1
-    # ADD YOUR CODE HERE: 4
-
+    u=ttk.Style()
+    u.configure('C.TFrame', background=c3, borderwidth=5, relief='raised')
+    frame4 = ttk.Frame(mainframe, width=100, height=100, style='C.TFrame')
+    frame4.grid(column=3, row=1)
 
 
 # Event handler for button press.
@@ -113,47 +119,29 @@ mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
 
-frame1 = ttk.Frame(mainframe, width=100, height=100, borderwidth=0, relief='sunken')
-frame1.grid(column=1, row=1)
-
-s=ttk.Style()
-s.configure('A.TFrame', background='red', borderwidth=5, relief='raised')
-frame2 = ttk.Frame(mainframe, width=100, height=100, style='A.TFrame')
-frame2.grid(column=2, row=1)
-
-t=ttk.Style()
-t.configure('B.TFrame', background='green', borderwidth=5, relief='raised')
-frame3 = ttk.Frame(mainframe, width=100, height=100, style='B.TFrame')
-frame3.grid(column=1, row=2)
-
-u=ttk.Style()
-u.configure('C.TFrame', background='blue', borderwidth=5, relief='raised')
-frame4 = ttk.Frame(mainframe, width=100, height=100, style='C.TFrame')
-frame4.grid(column=2, row=2)
-
- 
-
 # Create a Label "What is R?", column=1, row=2
-# ADD YOUR CODE HERE: 5
+ttk.Label(mainframe, text="What is R?").grid(column=1, row=2)
 
 # Create an Entry box to input user's answer, textvariable=rvalue, column=2, row=2
-# ADD YOUR CODE HERE: 6
+rvalue = StringVar()
+rvalue_entry = ttk.Entry(mainframe, width=10, textvariable=rvalue)
+rvalue_entry.grid(column=2, row=2)
 
 # Create a Button to run compare function, text="Check", command=compare, column=3, row=2
-# ADD YOUR CODE HERE: 7
+ttk.Button(mainframe, text='Check', command=compare,).grid(column=3, row=2)
 
 # Create a Label to display the response, textvariable=response, column=1, row=3
-# ADD YOUR CODE HERE: 8
+response = StringVar()
+ttk.Label(mainframe, textvariable=response).grid(column=1, row=3)
 
 # Initialize the count to zero
 count = 0
 
 # Bind the Enter key to running the compare funnction
-# ADD YOUR CODE HERE: 10
+root.bind("<Return>", compare)
 
 # Set the focus to the entry box widget
-# ADD YOUR CODE HERE: 11
-
+rvalue_entry.focus()
 
 # Start the game by asking a new question
 newQuestion()            
