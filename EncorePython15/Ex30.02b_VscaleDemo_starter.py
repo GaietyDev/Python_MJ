@@ -40,7 +40,7 @@ slider_label = ttk.Label(
 
 
 # locate the label, column=0, row=0, pad with 10 pixels in x and in y
-# ADD YOUR CODE HERE: 1
+slider_label.grid(column=0, row=0, padx=10, pady=10,)
 
 
 #----------------------------------------- 
@@ -50,12 +50,14 @@ current_value = IntVar()
 
 # create the slider, ranging from 0 to 100, oriented vertically, having a
 # length of 200, command=slider_changed, variable=current_value
-# ADD YOUR CODE HERE: 2
+slider = ttk.Scale(root, from_=0, to=100, orient='vertical',
+                   length=200, command=slider_changed,
+                   variable=current_value)
 
 
 # locate the slider; spans rows 1 and 2, locate in column=0, row=1,
 # pad 10 pixels in x and y
-# ADD YOUR CODE HERE: 3
+slider.grid(column=0, row=1, rowspan=2, padx=10, pady=10)
 
 #-----------------------------------------
     
@@ -66,16 +68,16 @@ current_value_label = ttk.Label(
 )
 
 # locate the label, column=1, row=1, pad with 10 pixels in x and in y
-# ADD YOUR CODE HERE: 4
+current_value_label.grid(column=1, row=1, padx=10, pady=10)
 
 #-----------------------------------------
     
 # create a dynamic label to display the value of the slider
 # text=get_slider_value()
-# ADD YOUR CODE HERE: 5
+value_label = ttk.Label(root, text=get_slider_value())
 
 # locate the dynamic label, column=1, row=2, pad with 10 pixels in x and in y
-# ADD YOUR CODE HERE: 6
+value_label.grid(column=1, row=2, padx=10, pady=10)
 
 #-----------------------------------------
     
