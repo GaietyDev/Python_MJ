@@ -1,23 +1,31 @@
 import threading
 import turtle
 import time
+import queue
+
+# Create Queue object
+q = queue.Queue()
+thread_done = 0
 
 # --- Threading Class ---
 class SpiralThread(threading.Thread):
     def __init__(self, params_dict):
         # Initialize the base threading class
-        super().__init__(name=params_dict['name'])
+        super().__init__(name=params_dict['name'], args=(q,))
         
         # Unpack the dictionary into instance variables
+        self.name = params_dict['name']
         self.x = params_dict['x']
         self.y = params_dict['y']
         self.color = params_dict['color']
         self.speed_factor = params_dict['speed']
+        self.t = params_dict[self.name]
+        self.lock = threading.Lock()
+        self.loops = 0
 
     def run(self):
-        # Instantiate a unique turtle object for this thread
-        # (Using RawTurtle allows it to play nicer with multithreading)
-        t = turtle.RawTurtle(turtle.Screen())
+        global q, thread_done
+        t = self.t
         t.speed(0) # Set animation speed to fastest so it draws smoothly
         
         # Move the turtle to its unique starting position without drawing
@@ -27,21 +35,31 @@ class SpiralThread(threading.Thread):
         
         # Set the spiral color
         t.color(self.color)
-        
-        # Draw the spiral
+
+        # Draw Spiral        
         # A slower "speed factor" results in a tighter, smaller spiral
-        for i in range(1000):
-            # The step size increases slightly, and scales based on the speed factor
-            step = (i * 0.01) * self.speed_factor
-            t.forward(step)
-            t.left(4)  # Tight angle to create the spiral effect
+        # The step size increases slightly, and scales based on the speed factor
+        for i in range(10000):
+            self.lock.acquire()
+            step = (i*0.5) *self.speed_factor
+            q.put(self.name)
+            q.put(step)
+            self.lock.release()
+            time.sleep(1)
+            #print("test " +f"{i}")
+            #print(q.get())
+        thread_done += 1
             
         # Lift the pen up upon completion
         t.penup()
 
+    
+
 
 # --- Main Function ---
 def main():
+    global q, thread_done
+    
     # Setup the shared screen configuration
     screen = turtle.Screen()
     screen.setup(width=800, height=800)
@@ -59,6 +77,7 @@ def main():
     # First Loop: Populate the configuration dictionaries
     for i in range(4):
         thread_name = f"SpiralThread-{i}"
+        t = turtle.RawTurtle(turtle.Screen())
         
         # Create a dictionary containing the parameters for this specific spiral
         params = {
@@ -66,7 +85,8 @@ def main():
             'x': x_coords[i],
             'y': y_coords[i],
             'color': colors[i],
-            'speed': speeds[i]
+            'speed': speeds[i],
+            thread_name : t
         }
         
         # Append to the main list
@@ -80,15 +100,23 @@ def main():
         # Instantiate the custom threading object, passing the dictionary
         t_obj = SpiralThread(params)
         active_threads.append(t_obj)
-        
-        # Start the thread execution
         t_obj.start()
-        # Small sleep delay to prevent tkinter from freezing during initialization
-        time.sleep(0.2) 
+    for thread in active_threads:
+        thread.join()
 
+    while thread_done != 4:
+        time.sleep(0.01)
+        threadName = q.get()
+        step = q.get()
+        t = active_threads[thread_name]
+        print(t)
+        t.forward(step)
+        t.left(25)
+    print("queue ended")
+        
     # Keep the window open until clicked after threads finish
     screen.exitonclick()
 
-if __name__ == "__main__":
-    main()
+main()
+print("finished")
 # Modified AI Generated Code 
