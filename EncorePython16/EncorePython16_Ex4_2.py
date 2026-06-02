@@ -3,15 +3,17 @@ import turtle
 import time
 import queue
 
+# YouTube video to help
+# https://www.youtube.com/watch?v=Ir6wNTUWC74
+
 # Create Queue object
 q = queue.Queue()
-thread_done = 0
 
 # --- Threading Class ---
 class SpiralThread(threading.Thread):
     def __init__(self, params_dict):
         # Initialize the base threading class
-        super().__init__(name=params_dict['name'], args=(q,))
+        super().__init__(name=params_dict['name'], args=(q,), daemon=True)
         
         # Unpack the dictionary into instance variables
         self.name = params_dict['name']
@@ -24,7 +26,7 @@ class SpiralThread(threading.Thread):
         self.loops = 0
 
     def run(self):
-        global q, thread_done
+        global q,
         t = self.t
         t.speed(0) # Set animation speed to fastest so it draws smoothly
         
@@ -48,8 +50,7 @@ class SpiralThread(threading.Thread):
             time.sleep(1)
             #print("test " +f"{i}")
             #print(q.get())
-        thread_done += 1
-            
+     
         # Lift the pen up upon completion
         t.penup()
 
