@@ -60,6 +60,9 @@ class SpiralThread(threading.Thread):
 # --- Main Function ---
 def main():
     global q, thread_done
+
+    def drawSpiral():
+        pass
     
     # Setup the shared screen configuration
     screen = turtle.Screen()
